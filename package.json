@@ -1,0 +1,21 @@
+{
+  "name": "grad-school",
+  "version": "1.0.0",
+  "description": "in-memory graph thing",
+  "main": "./src/index.js",
+  "type":"module",
+  "scripts": {
+    "watch":"amble ./scratch.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/grounder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spencermountain/grounder/issues"
+  },
+  "homepage": "https://github.com/spencermountain/grounder#readme"
+}
