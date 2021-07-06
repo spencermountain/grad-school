@@ -1,10 +1,5 @@
-const byRow = function (root, start) {
+const byRow = function (root) {
   let rows = []
-  // root.size = size
-  // root.start = start
-  // divide-up the size
-  // size = Math.floor(size / (root.children.length || 1))
-
   const doit = function (node, x, y, size) {
     node.x = x
     node.y = y
@@ -20,5 +15,15 @@ const byRow = function (root, start) {
   doit(root, 0, 0, 100)
   return rows
 }
-const byCol = function (root) {}
-export { byRow, byCol }
+
+const fillDown = function (root) {
+  let props = root.props || {}
+  const doit = node => {
+    props = Object.assign({}, props, node.props)
+    node.props = props
+    node.children.forEach(doit)
+  }
+  doit(root)
+}
+
+export { byRow, fillDown }

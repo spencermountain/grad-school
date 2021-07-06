@@ -2,10 +2,17 @@ import Grad from './src/index.js'
 
 let g = new Grad()
 
-g.add('a')
-g.add('b').add(['b1', 'b2'])
-g.add('c')
-g.add('d')
-// g.add('e').add('e1').add('e11').add('e111').add(['e111a', 'e111b', 'e111c', 'e111d'])
+g.add('a', { isA: true }).add(['a1', 'a2'])
+let b = g.add('b', { cool: true })
+// b.add(['b1', 'b2'])
+// g.add(['c', 'd'])
 
-console.log(g.out('ascii'))
+g.props = { top: true }
+g.fillDown()
+
+console.log(b)
+
+// g.get('b').remove('b1')
+// console.log(g.get('/b/b2'))
+
+// console.log(g.out('ascii'))
