@@ -2,11 +2,11 @@
   "name": "grad-school",
   "version": "1.0.0",
   "description": "in-memory graph thing",
-  "main": "./src/index.js",
-  "type":"module",
+  "main": "./src/Node.js",
+  "type": "module",
   "scripts": {
-    "watch":"amble ./scratch.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "amble ./scratch.js",
+    "test": "tape-es \"./tests/**/*.test.js\" | tap-dancer"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/spencermountain/grounder/issues"
   },
-  "homepage": "https://github.com/spencermountain/grounder#readme"
+  "homepage": "https://github.com/spencermountain/grounder#readme",
+  "devDependencies": {
+    "tap-dancer": "0.3.4",
+    "tape": "5.2.2",
+    "tape-es": "1.2.15"
+  }
 }
