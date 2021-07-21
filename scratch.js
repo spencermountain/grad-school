@@ -20,6 +20,4 @@ console.dir(g.json, { depth: 15 })
 // g.get('b').remove('b1')
 // console.log(g.get('/b/b2'))
 
-// console.log(g.out('ascii'))
-
-// console.log(g.allKids())
+console.log(g.out('ascii'))

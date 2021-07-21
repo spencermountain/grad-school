@@ -45,6 +45,9 @@ b -> b1 -> b11
   let g = grad(str)
   let list = g.list()
   t.equal(list.length, 6, 'get list')
+
+  list = g.get('b').list()
+  t.equal(list.length, 3, 'get sub-list')
   t.end()
 })
 

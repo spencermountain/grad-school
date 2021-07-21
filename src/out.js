@@ -1,7 +1,7 @@
 import measure from './_measure.js'
 import { byRow } from './_crawl.js'
 
-const center = (txt, size) => {
+const center = (txt = '', size) => {
   size = size - 3
   let halfWay = Math.floor(size / 2)
   let oneSide = Math.floor(txt.length / 2)
