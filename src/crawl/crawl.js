@@ -8,7 +8,10 @@ const getBreadth = root => {
     // add to list
     list.push(node)
     // add kids to queue
-    node.children.forEach(n => queue.push(n))
+    node.children.forEach(n => {
+      n._cache.parents = node._cache.parents + 1
+      queue.push(n)
+    })
   }
   return list
 }
@@ -23,7 +26,10 @@ const getDepth = root => {
     // add to list
     list.push(node)
     // add kids to queue
-    node.children.forEach(n => queue.push(n))
+    node.children.forEach(n => {
+      n._cache.parents = node._cache.parents + 1
+      queue.push(n)
+    })
   }
   return list
 }

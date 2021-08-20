@@ -21,11 +21,11 @@ const parseOne = function (str) {
     let list = str.split(/,/)
     list = list.map(s => s.trim()).filter(s => s)
     list = list.map(label => {
-      return { label: label, children: [] }
+      return { id: label, children: [], _cache: {} }
     })
     return list
   }
-  return [{ label: str, children: [] }]
+  return [{ id: str, children: [], _cache: {} }]
 }
 
 // a -> a1 -> a2
@@ -44,6 +44,17 @@ const parseLine = function (str) {
   return list[0]
 }
 
+// find the parent
+const rollBackWards = function (list, i) {
+  let have = list[i].indent
+  for (; i >= 0; i -= 1) {
+    if (list[i].indent < have) {
+      return list[i]
+    }
+  }
+  return list[0]
+}
+
 const byIndent = function (list) {
   // add them to nth child
   let root = { children: [] }
@@ -52,10 +63,9 @@ const byIndent = function (list) {
       // add it to the root
       root.children = root.children.concat(o.node)
     } else if (list[i - 1]) {
-      let before = list[i - 1]
-      let lastNode = before.node
+      let parent = rollBackWards(list, i)
       // add it to the deepest node last line
-      lastNode.children.push(o.node)
+      parent.node.children.push(o.node)
     }
   })
   return root
@@ -72,6 +82,7 @@ const parse = function (txt) {
     list.push({ indent: indent, node: parseLine(line) })
   })
   let root = byIndent(list)
+  root._cache = { parents: 0 }
   return root
 }
 export default parse

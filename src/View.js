@@ -1,7 +1,7 @@
-import out from './out.js'
-import { fillDown } from './_crawl.js'
-import { normalize, getByPointer } from './_lib.js'
-import { getBreadth, getDepth } from './crawl.js'
+import out from './out/index.js'
+import { normalize, getByPointer } from './lib/_lib.js'
+import { getDepth } from './crawl/crawl.js'
+import debug from './out/debug.js'
 const hasSlash = /\//
 
 class View {
@@ -62,6 +62,10 @@ class View {
   //   this.children = this.children.filter(obj => obj.label !== label)
   //   return this
   // }
+  cache() {
+    getDepth(this.json)
+    return this
+  }
   list() {
     return getDepth(this.json)
   }
@@ -71,6 +75,10 @@ class View {
   }
   out() {
     return out(this.json)
+  }
+  debug() {
+    debug(this.json)
+    return this
   }
 }
 

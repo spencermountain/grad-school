@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent",
     "test": "tape-es \"./tests/**/*.test.js\" | tap-dancer"
   },
   "repository": {
@@ -22,5 +23,9 @@
     "tap-dancer": "0.3.4",
     "tape": "5.2.2",
     "tape-es": "1.2.15"
+  },
+  "dependencies": {
+    "rollup": "2.53.1",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
