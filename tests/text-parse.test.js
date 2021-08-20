@@ -9,26 +9,26 @@ b -> b1 -> b11
 
   let g = grad(str)
   let found = g.get('a') || {}
-  t.equal(found.label, 'a', 'got 1st child')
+  t.equal(found.id, 'a', 'got 1st child')
   t.equal(found.children.length, 1, 'one child')
 
   found = g.get('b/b1') || {}
-  t.equal(found.label, 'b1', 'got 1-nested')
+  t.equal(found.id, 'b1', 'got 1-nested')
   t.equal(found.children.length, 1, 'b1 child')
 
   found = g.get('b/b1/b11') || {}
-  t.equal(found.label, 'b11', 'got 2-nested')
+  t.equal(found.id, 'b11', 'got 2-nested')
   t.equal(found.children.length, 0, 'no b11 child')
 
   let a = g.get('a') || {}
-  t.equal(a.label, 'a', 'got a')
+  t.equal(a.id, 'a', 'got a')
   found = a.get('a1') || {}
-  t.equal(found.label, 'a1', 'got a1')
+  t.equal(found.id, 'a1', 'got a1')
 
   let b = g.get('b') || {}
-  t.equal(b.label, 'b', 'got b')
+  t.equal(b.id, 'b', 'got b')
   found = b.get('b1') || {}
-  t.equal(found.label, 'b1', 'got b1')
+  t.equal(found.id, 'b1', 'got b1')
 
   t.end()
 })

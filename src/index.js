@@ -2,14 +2,12 @@ import parse from './parse/index.js'
 import View from './View.js'
 
 const grad = function (input) {
-  let data = {}
-  if (typeof input === 'string') {
-    data = parse(input)
-  } else {
-    data = input || data
-  }
-  // start constructing from data
+  let data = parse(input)
   return new View(data)
+}
+
+grad.prototype.plugin = function (fn) {
+  fn(this)
 }
 
 export default grad

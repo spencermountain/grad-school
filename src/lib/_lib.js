@@ -15,7 +15,7 @@ const parsePointer = function (str) {
 const getByPointer = function (node, str) {
   let ptr = parsePointer(str)
   for (let i = 0; i < ptr.length; i += 1) {
-    let found = node.children.find(obj => obj.label === ptr[i])
+    let found = node.children.find(obj => obj.id === ptr[i])
     if (!found) {
       return null
     }

@@ -1,7 +1,6 @@
 import out from './out/index.js'
 import { normalize, getByPointer } from './lib/_lib.js'
 import { getDepth } from './crawl/crawl.js'
-import debug from './out/debug.js'
 const hasSlash = /\//
 
 class View {
@@ -15,8 +14,8 @@ class View {
   get children() {
     return this.json.children
   }
-  get label() {
-    return this.json.label
+  get id() {
+    return this.json.id
   }
   get props() {
     return this.json.props || {}
@@ -29,15 +28,14 @@ class View {
     }
     Object.assign(prop, input)
   }
-  get(label) {
-    label = normalize(label)
-    if (!hasSlash.test(label)) {
+  get(id) {
+    id = normalize(id)
+    if (!hasSlash.test(id)) {
       // lookup by label name
-      let found = this.children.find(obj => obj.label === label)
-      // console.log(this.children)
+      let found = this.children.find(obj => obj.id === id)
       return new View(found)
     }
-    let obj = getByPointer(this, label)
+    let obj = getByPointer(this, id)
     return new View(obj)
   }
   // add(label, props = {}) {
@@ -62,6 +60,9 @@ class View {
   //   this.children = this.children.filter(obj => obj.label !== label)
   //   return this
   // }
+  nodes() {
+    return getDepth(this.json)
+  }
   cache() {
     getDepth(this.json)
     return this
@@ -70,14 +71,14 @@ class View {
     return getDepth(this.json)
   }
   fillDown() {
-    fillDown(this.json)
+    // fillDown(this.json)
     return this
   }
-  out() {
-    return out(this.json)
+  out(fmt) {
+    return out(this.json, fmt)
   }
   debug() {
-    debug(this.json)
+    out(this.json, 'debug')
     return this
   }
 }

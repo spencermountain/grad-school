@@ -1,33 +1,26 @@
 import grad from './src/index.js'
-import parse from './src/parse/index.js'
+// import fromText from './src/parse/from-text.js'
 
-let str = `
-// a -> a1
-// b -> b1 -> b11
-c
-  c1
-  c2
-    c2a
-    c2b
+// let str = `
+// a -> a2
+//       -> a21
+//   -> a1
+// `
+
+// let rows = [
+//   { id: 'a', parent: null },
+//   { id: 'b', parent: null },
+//   { id: 'a1', parent: 'a' },
+//   { id: 'a2', parent: 'a' },
+//   { id: 'a21', parent: 'a2' },
+// ]
+
+const input = `
+b
+a
+    a2
+        a21
+    a1
 `
-// const data = parse(str)
-
-let g = grad(str).debug()
-console.dir(g.json, { depth: 15 })
-g.cache()
-
-// g.props = { fun: true }
-// g.fillDown()
-// console.dir(g.json, { depth: 15 })
-// console.log(g.list())
-// g.add('a', { isA: true }).add(['a1', 'a2'])
-// let b = g.add('b', { cool: true })
-// b.add(['b1', 'b2'])
-// g.add(['c', 'd'])
-
-// g.props = { top: true }
-// g.fillDown()
-// g.get('b').remove('b1')
-// console.log(g.get('/b/b2'))
-
-// console.log(g.out('ascii'))
+let g = grad(input).debug()
+// console.log(g.out('flat'))
