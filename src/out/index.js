@@ -7,14 +7,10 @@ const fmts = {
   array: toArray,
   flat: toArray,
 }
-const nested = {
-  nested: true,
-  json: true,
-}
 
-const out = function (root, label = 'ascii') {
+const out = function (root, label) {
   // return internal json
-  if (nested.hasOwnProperty(label)) {
+  if (label === 'nested' || label === 'json') {
     return root
   }
   if (label === 'debug') {

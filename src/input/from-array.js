@@ -15,13 +15,12 @@ const fromArray = function (rows) {
         delete node.parent //no-longer needed
         parent.children.push(node)
       } else {
-        console.warn(`[Grad] - missing node '${node.parent}'`)
+        console.warn(`[Grad] - missing node '${node.parent}'`) // eslint-disable-line
       }
       return
-    } else {
-      // no parent add it to root
-      root.children.push(node)
     }
+    // no parent, add it to root
+    root.children.push(node)
   })
   return root
 }

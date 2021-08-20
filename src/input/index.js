@@ -4,7 +4,7 @@ import byDepth from '../crawl/crawl.js'
 import validate from './_validate.js'
 import { isArray } from '../lib/_lib.js'
 
-const fromNested = function (json) {
+const fromNested = json => {
   let rows = byDepth(json)
   rows.forEach(validate)
   return json

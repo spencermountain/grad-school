@@ -2,7 +2,7 @@ import { isSet, isObject, isArray } from '../lib/_lib.js'
 import byDepth from './crawl.js'
 
 // recursive merge of objects
-function mergeDeep(props = {}, parent = {}) {
+const mergeDeep = (props, parent) => {
   Object.keys(parent).forEach(k => {
     // merge sets
     if (isSet(parent[k])) {
@@ -18,8 +18,7 @@ function mergeDeep(props = {}, parent = {}) {
     }
     //  concat an array
     if (isArray(parent[k])) {
-      let arr = props[k] || []
-      props[k] = parent[k].concat(arr)
+      props[k] = parent[k].concat(props[k] || [])
       return
     }
 

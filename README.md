@@ -19,6 +19,9 @@
   <code>npm install grad-school</code>
 </div>
 
+<!-- spacer -->
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 **grad-school** is a tool for creating ad-hoc graphs, in a scripting language, and then querying them.
 
 it's surprising how there's no super-clear way to author graph-data.
@@ -28,6 +31,11 @@ It always hurts my head. Even simple graphs do.
 Maybe i have a head-problem, or maybe JSON is just an awkward way to think-about graphs.
 
 library is like, 3kb.
+
+<!-- spacer -->
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+---
 
 ### Ok, graphs:
 
@@ -40,8 +48,7 @@ It's a bit like how graphviz does it:
 
 ```js
 let str = `
-a -> a2
-      -> a21
+a -> a2 -> a21
   -> a1
 b
 `
@@ -95,7 +102,10 @@ let g = grad(str).debug()
 */
 ```
 
-## Javascript construction api
+<!-- spacer -->
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+## JS api
 
 you can also easily mess-around with the graph:
 
@@ -117,7 +127,7 @@ console.log(g.out())
 
 ## Fill-down
 
-grad-school has a facility for 'deducing', down the tree, and intellegently merging the data of each node:
+you can 'deduce', down the tree, and intellegently merge the data of each node:
 
 ```js
 let str = `

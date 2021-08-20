@@ -3,7 +3,7 @@ import validate from './_validate.js'
 const isComment = /^ *(#|\/\/)/
 
 const indentLevel = str => {
-  const reg = /^(  |\t)/
+  const reg = /^( {2}|\t)/
   let indent = 0
   while (reg.test(str)) {
     str = str.replace(reg, '')
