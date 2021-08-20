@@ -1,11 +1,8 @@
 import fromText from './from-text.js'
 import fromArray from './from-array.js'
-import { byDepth } from '../crawl/crawl.js'
+import byDepth from '../crawl/crawl.js'
 import validate from './_validate.js'
-
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
+import { isArray } from '../lib/_lib.js'
 
 const fromNested = function (json) {
   let rows = byDepth(json)

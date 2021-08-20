@@ -1,4 +1,4 @@
-import { byDepth } from '../crawl/crawl.js'
+import byDepth from '../crawl/crawl.js'
 import c from '../lib/color.js'
 const indent = '    '
 

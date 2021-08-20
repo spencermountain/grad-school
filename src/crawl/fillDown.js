@@ -1,11 +1,5 @@
-const isObject = function (item) {
-  return item && typeof item === 'object' && !Array.isArray(item)
-}
-
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-const isSet = item => item instanceof Set
+import { isSet, isObject, isArray } from '../lib/_lib.js'
+import byDepth from './crawl.js'
 
 // recursive merge of objects
 function mergeDeep(props = {}, parent = {}) {
@@ -37,23 +31,12 @@ function mergeDeep(props = {}, parent = {}) {
   return props
 }
 
-// [a, a1, b, b1]
 const fillDown = root => {
-  let list = []
-  let queue = [root]
-  while (queue.length > 0) {
-    // get first
-    let node = queue.pop()
-    // add to list
-    list.push(node)
-    // add kids to queue
-    node.children.forEach(child => {
-      child.props = mergeDeep(child.props, node.props)
-      queue.push(child)
-    })
-  }
-  return list
+  byDepth(root, (parent, child) => {
+    child.props = mergeDeep(child.props, parent.props)
+  })
 }
+
 export default fillDown
 
 // console.log(mergeDeep({}, { cool: false }))

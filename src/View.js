@@ -1,6 +1,6 @@
 import out from './out/index.js'
 import { normalize, getByPointer } from './lib/_lib.js'
-import { byDepth } from './crawl/crawl.js'
+import byDepth from './crawl/crawl.js'
 import cache from './crawl/cache.js'
 import fillDown from './crawl/fillDown.js'
 const hasSlash = /\//
