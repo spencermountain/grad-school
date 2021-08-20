@@ -1,4 +1,4 @@
-import { getDepth } from '../crawl/crawl.js'
+import { byDepth } from '../crawl/crawl.js'
 import c from '../lib/color.js'
 
 const toText = function (json, color) {
@@ -8,7 +8,7 @@ const toText = function (json, color) {
     arrow = c.dim('→ ')
   }
   let txt = ''
-  let rows = getDepth(json)
+  let rows = byDepth(json)
   rows.forEach((node, i) => {
     let label = node.id || ''
     if (color) {

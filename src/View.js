@@ -1,10 +1,13 @@
 import out from './out/index.js'
 import { normalize, getByPointer } from './lib/_lib.js'
-import { getDepth } from './crawl/crawl.js'
+import { byDepth } from './crawl/crawl.js'
+import cache from './crawl/cache.js'
+import fillDown from './crawl/fillDown.js'
 const hasSlash = /\//
 
 class View {
   constructor(json = {}) {
+    json = cache(json)
     Object.defineProperty(this, 'json', {
       enumerable: false,
       value: json,
@@ -17,20 +20,18 @@ class View {
   get id() {
     return this.json.id
   }
-  get props() {
-    return this.json.props || {}
-  }
-  set props(input) {
-    this.json.props = this.json.props || {}
-    let prop = this.json.props
+  props(input = {}) {
+    let props = this.json.props || {}
     if (typeof input === 'string') {
-      prop[input] = true
+      props[input] = true
     }
-    Object.assign(prop, input)
+    this.json.props = Object.assign(props, input)
+    return this
   }
   get(id) {
     id = normalize(id)
     if (!hasSlash.test(id)) {
+      // console.log(this.json)
       // lookup by label name
       let found = this.children.find(obj => obj.id === id)
       return new View(found)
@@ -61,17 +62,17 @@ class View {
   //   return this
   // }
   nodes() {
-    return getDepth(this.json)
+    return byDepth(this.json)
   }
   cache() {
-    getDepth(this.json)
+    byDepth(this.json)
     return this
   }
   list() {
-    return getDepth(this.json)
+    return byDepth(this.json)
   }
   fillDown() {
-    // fillDown(this.json)
+    fillDown(this.json)
     return this
   }
   out(fmt) {

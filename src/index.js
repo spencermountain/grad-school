@@ -1,4 +1,4 @@
-import parse from './parse/index.js'
+import parse from './input/index.js'
 import View from './View.js'
 
 const grad = function (input) {

@@ -1,3 +1,5 @@
+import validate from './_validate.js'
+
 const isComment = /^ *(#|\/\/)/
 
 const indentLevel = str => {
@@ -21,11 +23,11 @@ const parseOne = function (str) {
     let list = str.split(/,/)
     list = list.map(s => s.trim()).filter(s => s)
     list = list.map(label => {
-      return { id: label, children: [], _cache: {} }
+      return validate({ id: label })
     })
     return list
   }
-  return [{ id: str, children: [], _cache: {} }]
+  return [validate({ id: str })]
 }
 
 // a -> a1 -> a2
@@ -82,7 +84,7 @@ const fromText = function (txt) {
     list.push({ indent: indent, node: parseLine(line) })
   })
   let root = byIndent(list)
-  root._cache = { parents: 0 }
+  // root._cache = { parents: 0 }
   return root
 }
 export default fromText

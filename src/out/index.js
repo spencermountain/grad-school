@@ -1,11 +1,5 @@
-import toText from './text.js'
-import { getDepth } from '../crawl/crawl.js'
-
-const toArray = function (json) {
-  let nodes = []
-  console.log(getDepth(json))
-  return nodes
-}
+import toText from './toText.js'
+import toArray from './toArray.js'
 
 const fmts = {
   text: toText,

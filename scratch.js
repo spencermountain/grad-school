@@ -1,26 +1,16 @@
 import grad from './src/index.js'
-// import fromText from './src/parse/from-text.js'
 
-// let str = `
-// a -> a2
-//       -> a21
-//   -> a1
-// `
-
-// let rows = [
-//   { id: 'a', parent: null },
-//   { id: 'b', parent: null },
-//   { id: 'a1', parent: 'a' },
-//   { id: 'a2', parent: 'a' },
-//   { id: 'a21', parent: 'a2' },
-// ]
-
-const input = `
-b
-a
-    a2
-        a21
-    a1
+let str = `
+a -> a1
+b -> b1 -> b11
 `
-let g = grad(input).debug()
+
+let g = grad(str)
+let found = g.get('a') || {}
+
+console.log(found)
+// const a = g.get('a').props({ foo: ['ayy'] })
+// a.get('a2').props({ yeah: true })
+// g.fillDown()
+// console.dir(g.out('array'), { depth: 15 })
 // console.log(g.out('flat'))

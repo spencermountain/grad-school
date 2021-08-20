@@ -1,17 +1,18 @@
+import validate from './_validate.js'
+
 // turn parent-index rows into nested json
-const flatJson = function (rows) {
+const fromArray = function (rows) {
   let index = {}
   rows.forEach(node => {
     index[node.id] = node
-    node.children = node.children || []
   })
-  let root = {
-    children: [],
-  }
+  let root = validate({})
   rows.forEach(node => {
+    node = validate(node)
     if (node.parent) {
       if (index.hasOwnProperty(node.parent)) {
         let parent = index[node.parent]
+        delete node.parent //no-longer needed
         parent.children.push(node)
       } else {
         console.warn(`[Grad] - missing node '${node.parent}'`)
@@ -24,4 +25,4 @@ const flatJson = function (rows) {
   })
   return root
 }
-export default flatJson
+export default fromArray
