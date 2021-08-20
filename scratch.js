@@ -1,15 +1,15 @@
 import grad from './src/index.js'
 
-let str = `
-a -> a1
-b -> b1 -> b11
-`
+let str = ``
+const g = grad(str)
+// t.equal(g.nodes().length, 6, 'origin-5')
+console.log(g.depth())
 
-let g = grad(str)
-g.get('a').props({ list: new Set(['fromA', 'also']) })
-g.props({ list: new Set(['fromRoot']) })
-g.fillDown()
-g.debug()
+// console.dir(g.json, { depth: 15 })
+// g.get('a').props({ list: new Set(['fromA', 'also']) })
+// g.props({ list: new Set(['fromRoot']) })
+// g.fillDown()
+// g.debug()
 // console.log(g.get('a/a1').json)
 // let a1 = a.get('a1')
 // console.dir(g.json, { depth: 15 })
