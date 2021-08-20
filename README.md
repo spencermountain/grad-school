@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
-  <div>graph-traversal library</div>
+  <div>cute graph-traversal</div>
   <a href="https://npmjs.org/package/grad-school">
     <img src="https://img.shields.io/npm/v/grad-school.svg?style=flat-square" />
   </a>
@@ -24,11 +24,13 @@
 
 **grad-school** is a tool for creating ad-hoc graphs, in a scripting language, and then querying them.
 
-it's surprising how there's no super-clear way to author graph-data.
+it's surprising how there's no super-clear way to author graph-data, or even think about.
 
 It always hurts my head. Even simple graphs do.
 
-Maybe i have a head-problem, or maybe JSON is just an awkward way to think-about graphs.
+Maybe i have a head-problem, or maybe JSON is just an awkward way to represent graphs.
+
+either way...
 
 library is like, 3kb.
 
@@ -37,9 +39,9 @@ library is like, 3kb.
 
 ---
 
-### Ok, graphs:
+### Ok, graphs -
 
-This library supports 3 formats:
+we support 3 formats:
 
 ### String-format
 
@@ -105,14 +107,12 @@ let g = grad(str).debug()
 <!-- spacer -->
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-## JS api
+## JS API
 
 you can also easily mess-around with the graph:
 
 ```js
-import Grad from 'grad-school'
-
-let g = new Grad('a -> a1')
+let g = grad('a -> a1')
 
 // add new nodes
 g.add('b').add(['b1', 'b2'])
@@ -127,7 +127,7 @@ console.log(g.out())
 
 ## Fill-down
 
-you can 'deduce', down the tree, and intellegently merge the data of each node:
+you can 'deduce', down the tree, and intellegently merge the properties of each node:
 
 ```js
 let str = `
@@ -141,7 +141,7 @@ let g = grad(str)
 g.get('c').props({ inC: true })
 g.fillDown()
 
-// reach down and get a leaf
+// check a c-leaf
 g.get('c/c1/c2').json.props
 // { inC: true }
 
@@ -157,9 +157,12 @@ a -> a1 -> a11
 b -> b1
 `
 let g = grad(str)
+// add data to root
 g.props({ list: ['fromRoot'] })
+// add data to child
 g.get('a').props({ list: ['fromA'] })
 g.fillDown()
+
 // b-side has root-data
 let have = g.get('b/b1').json.props
 // { list: ['fromRoot'] }
