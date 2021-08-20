@@ -5,8 +5,6 @@ const toArray = function (json) {
   nodes.forEach(node => {
     node = Object.assign({}, node)
     delete node.children //no-longer needed
-    // delete node._cache
-    // delete node.props
   })
   // should we show the root?
   let root = nodes[0]

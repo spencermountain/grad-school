@@ -18,7 +18,7 @@ const out = function (root, label = 'ascii') {
     return root
   }
   if (label === 'debug') {
-    console.log(toText(root))
+    console.log(toText(root, true)) // eslint-disable-line
     return null
   }
   if (fmts.hasOwnProperty(label)) {

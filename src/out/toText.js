@@ -1,8 +1,8 @@
 import { byDepth } from '../crawl/crawl.js'
 import c from '../lib/color.js'
+const indent = '    '
 
 const toText = function (json, color) {
-  const indent = '    '
   let arrow = '-> '
   if (color) {
     arrow = c.dim('→ ')
