@@ -84,7 +84,7 @@ const fromText = function (txt) {
     list.push({ indent: indent, node: parseLine(line) })
   })
   let root = byIndent(list)
-  // root._cache = { parents: 0 }
+  root = validate(root)
   return root
 }
 export default fromText

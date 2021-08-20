@@ -17,7 +17,7 @@ const toText = function (json, color) {
     if (i === 0 && !node.id) {
       return //skip empty root
     }
-    let depth = node._cache.parents.length - 1
+    let depth = node._cache.parents.length
     txt += indent.repeat(depth) + arrow + label + '\n'
   })
   return txt

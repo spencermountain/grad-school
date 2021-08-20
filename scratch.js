@@ -6,9 +6,16 @@ b -> b1 -> b11
 `
 
 let g = grad(str)
-let found = g.get('a') || {}
+let a = g.get('a') //.props({ cool: true })
+// let a1 = a.get('a1')
+// console.dir(g.json, { depth: 15 })
 
-console.log(found)
+// console.log(g.out('array'))
+
+// let b = grad(g.out('text'))
+// console.log('=-=-=-= here -=-=-=-')
+// console.log(b.out('text'))
+// console.log(found)
 // const a = g.get('a').props({ foo: ['ayy'] })
 // a.get('a2').props({ yeah: true })
 // g.fillDown()

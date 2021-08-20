@@ -9,7 +9,7 @@ const isArray = function (arr) {
 function mergeDeep(props = {}, parent = {}) {
   Object.keys(parent).forEach(k => {
     // ignore null
-    if (!parent[k]) {
+    if (parent[k] === null) {
       return
     }
     // merge an object
@@ -22,7 +22,9 @@ function mergeDeep(props = {}, parent = {}) {
       props[k] = parent[k].concat(props[k])
     }
     // just overwrite it
-    props[k] = parent[k]
+    if (props[k] === undefined) {
+      props[k] = parent[k]
+    }
   })
   return props
 }
@@ -45,3 +47,5 @@ const fillDown = root => {
   return list
 }
 export default fillDown
+
+// console.log(mergeDeep({}, { cool: false }))

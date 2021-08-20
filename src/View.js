@@ -4,10 +4,11 @@ import { byDepth } from './crawl/crawl.js'
 import cache from './crawl/cache.js'
 import fillDown from './crawl/fillDown.js'
 const hasSlash = /\//
+import validate from './input/_validate.js'
 
 class View {
   constructor(json = {}) {
-    json = cache(json)
+    cache(json)
     Object.defineProperty(this, 'json', {
       enumerable: false,
       value: json,
@@ -20,6 +21,9 @@ class View {
   get id() {
     return this.json.id
   }
+  get found() {
+    return this.json.id || this.children.length > 0
+  }
   props(input = {}) {
     let props = this.json.props || {}
     if (typeof input === 'string') {
@@ -31,12 +35,11 @@ class View {
   get(id) {
     id = normalize(id)
     if (!hasSlash.test(id)) {
-      // console.log(this.json)
       // lookup by label name
       let found = this.children.find(obj => obj.id === id)
       return new View(found)
     }
-    let obj = getByPointer(this, id)
+    let obj = getByPointer(this.json, id) || validate({})
     return new View(obj)
   }
   // add(label, props = {}) {

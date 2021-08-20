@@ -50,22 +50,3 @@ b -> b1 -> b11
   t.equal(list.length, 3, 'get sub-list')
   t.end()
 })
-
-test('fill-down', function (t) {
-  let str = `
-a
-b -> b1
-c -> c1 -> c2
-`
-  let g = grad(str)
-  g.props = { isCool: true }
-  let c1 = g.get('c/c1')
-  c1.props = { isCool: false }
-  g.fillDown()
-  t.equal(g.get('b').props.isCool, true, 'b')
-  t.equal(g.get('b/b1').props.isCool, true, 'b1')
-  t.equal(g.get('c').props.isCool, true, 'c')
-  t.equal(g.get('c/c1').props.isCool, false, 'c1')
-  t.equal(g.get('c/c1/c2').props.isCool, false, 'c2')
-  t.end()
-})
