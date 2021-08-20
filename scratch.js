@@ -6,7 +6,10 @@ b -> b1 -> b11
 `
 
 let g = grad(str)
-let a = g.get('a') //.props({ cool: true })
+g.get('a').props({ list: new Set(['fromA', 'also']) })
+g.props({ list: new Set(['fromRoot']) })
+g.fillDown()
+console.log(g.get('a/a1').json)
 // let a1 = a.get('a1')
 // console.dir(g.json, { depth: 15 })
 

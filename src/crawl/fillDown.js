@@ -5,22 +5,30 @@ const isObject = function (item) {
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
+const isSet = item => item instanceof Set
+
 // recursive merge of objects
 function mergeDeep(props = {}, parent = {}) {
   Object.keys(parent).forEach(k => {
-    // ignore null
-    if (parent[k] === null) {
+    // merge sets
+    if (isSet(parent[k])) {
+      let set = props[k] || new Set()
+      props[k] = new Set([...set, ...parent[k]])
       return
     }
     // merge an object
     if (isObject(parent[k])) {
-      props[k] = Object.assign({}, parent[k], props[k] || {})
+      let obj = props[k] || {}
+      props[k] = Object.assign({}, parent[k], obj)
       return
     }
     //  concat an array
     if (isArray(parent[k])) {
-      props[k] = parent[k].concat(props[k])
+      let arr = props[k] || []
+      props[k] = parent[k].concat(arr)
+      return
     }
+
     // just overwrite it
     if (props[k] === undefined) {
       props[k] = parent[k]

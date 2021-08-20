@@ -33,6 +33,40 @@ b -> b1 -> b11
   t.end()
 })
 
+test('fill-down array', function (t) {
+  let str = `
+a -> a1
+b -> b1 -> b11
+`
+  let g = grad(str)
+  g.get('a').props({ list: ['fromA', 'also'] })
+  g.props({ list: ['fromRoot'] })
+  g.fillDown()
+  let have = g.get('b/b1/b11').json.props.list
+  t.equal(have.length, 1, 'got one on b-side')
+
+  have = g.get('a/a1').json.props.list
+  t.equal(have.length, 3, 'got all 3 on a-side')
+  t.end()
+})
+
+test('fill-down set', function (t) {
+  let str = `
+a -> a1
+b -> b1 -> b11
+`
+  let g = grad(str)
+  g.get('a').props({ list: new Set(['fromA', 'also']) })
+  g.props({ list: new Set(['fromRoot']) })
+  g.fillDown()
+  let have = g.get('b/b1/b11').json.props.list
+  t.equal(have.size, 1, 'got one on b-side')
+
+  have = g.get('a/a1').json.props.list
+  t.equal(have.size, 3, 'got all 3 on a-side')
+  t.end()
+})
+
 test('fill-down key-val', function (t) {
   let str = `
 a
