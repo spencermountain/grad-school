@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "watch": "amble ./scratch.js",
+    "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "lint": "eslint ."
@@ -24,35 +24,24 @@
     "src/",
     "builds/"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/spencermountain/grounder.git"
-  },
+  "repository": "github:spencermountain/grad-school",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12"
   },
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "bugs": {
-    "url": "https://github.com/spencermountain/grounder/issues"
-  },
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "prettier": {
     "trailingComma": "none",
     "semi": false,
     "singleQuote": true,
     "printWidth": 100
   },
-  "homepage": "https://github.com/spencermountain/grounder#readme",
   "devDependencies": {
     "rollup": "4.63.4",
-    "rollup-plugin-terser": "^7.0.2",
+    "@rollup/plugin-terser": "^1.0.0",
     "tap-dancer": "0.4.0",
     "tape": "5.10.2"
   },
-  "eslintIgnore": [
-    "builds/*.js"
-  ],
   "license": "MIT",
   "dependencies": {
-    "@rollup/plugin-terser": "^1.0.0"
   }
 }

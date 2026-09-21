@@ -11,7 +11,7 @@ export default [
   // === Main ==
   {
     input: 'src/index.js',
-    output: [{ banner: banner, file: 'builds/grad-school.cjs', format: 'umd', name: 'nlp' }],
+    output: [{ banner: banner, file: 'builds/grad-school.cjs', format: 'umd', name: 'gradSchool' }],
     plugins: [terser()],
   },
   {
