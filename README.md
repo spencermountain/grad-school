@@ -73,9 +73,9 @@ let nodes = [
 let g = grad(nodes).debug()
 /*
   → a
+      → a1
       → a2
             → a21
-      → a1
   → b
 */
 ```
@@ -97,9 +97,9 @@ let nodes = {
 let g = grad(nodes).debug()
 /*
   → a
+      → a1
       → a2
             → a21
-      → a1
   → b
 */
 ```

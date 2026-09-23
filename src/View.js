@@ -47,7 +47,7 @@ class View {
       return this
     }
     id = normalize(id)
-    const node = validate({ id, props })
+    const node = validate({ id, props: { ...props } })
     this.json.children.push(node)
     return new View(node)
   }
@@ -76,18 +76,12 @@ class View {
     return this
   }
   depth() {
-    cacheDown(this.json)
-    const nodes = byDepth(this.json)
-    let max = nodes.length > 1 ? 1 : 0
-    // count # of parents
-    nodes.forEach(node => {
-      if (node._cache.parents.length === 0) {
-        return
-      }
-      const count = node._cache.parents.length + 1
-      if (count > max) {
-        max = count
-      }
+    let max = this.id ? 1 : 0
+    const depths = new Map([[this.json, max]])
+    byDepth(this.json, (parent, child) => {
+      const depth = depths.get(parent) + 1
+      depths.set(child, depth)
+      max = Math.max(max, depth)
     })
     return max
   }

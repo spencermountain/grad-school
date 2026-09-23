@@ -27,12 +27,13 @@ const byDepth = (root, fn) => {
     list.push(node)
     // add kids to queue
     if (node.children) {
-      node.children.forEach(child => {
+      for (let i = node.children.length - 1; i >= 0; i -= 1) {
+        const child = node.children[i]
         if (fn) {
           fn(node, child)
         }
         queue.push(child)
-      })
+      }
     }
   }
   return list

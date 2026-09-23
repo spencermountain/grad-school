@@ -2,17 +2,22 @@
   "name": "grad-school",
   "version": "0.0.5",
   "description": "graph logic and traversal",
-  "main": "./src/index.js",
-  "unpkg": "./builds/grad-school.cjs",
-  "module": "./builds/grad-school.mjs",
+  "license": "MIT",
+  "repository": "github:spencermountain/grad-school",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "sideEffects": false,
   "exports": {
     ".": {
       "require": "./builds/grad-school.cjs",
       "import": "./builds/grad-school.mjs",
       "default": "./builds/grad-school.cjs"
     }
+  },
+  "main": "./src/index.js",
+  "module": "./builds/grad-school.mjs",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=12"
   },
   "scripts": {
     "watch": "node --watch ./scratch.js",
@@ -22,20 +27,9 @@
     "lint": "eslint ."
   },
   "files": [
-    "src/",
-    "builds/"
+    "builds/",
+    "src/"
   ],
-  "repository": "github:spencermountain/grad-school",
-  "engines": {
-    "node": ">=12"
-  },
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "prettier": {
-    "trailingComma": "none",
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 100
-  },
   "devDependencies": {
     "@rollup/plugin-terser": "^1.0.0",
     "eslint": "10.5.0",
@@ -43,5 +37,11 @@
     "tap-dancer": "0.4.0",
     "tape": "5.10.2"
   },
-  "license": "MIT"
+  "unpkg": "./builds/grad-school.cjs",
+  "prettier": {
+    "trailingComma": "none",
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
+  }
 }

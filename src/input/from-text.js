@@ -1,6 +1,6 @@
 import validate from './_validate.js'
 
-const isComment = /^ *(#|\/\/)/
+const isComment = /^[ \t]*(#|\/\/)/
 
 const indentLevel = str => {
   const reg = /^( {2}|\t)/
@@ -81,7 +81,10 @@ const fromText = function (txt) {
       return
     }
     const indent = indentLevel(line)
-    list.push({ indent: indent, node: parseLine(line) })
+    const node = parseLine(line)
+    if (node) {
+      list.push({ indent, node })
+    }
   })
   let root = byIndent(list)
   root = validate(root)
