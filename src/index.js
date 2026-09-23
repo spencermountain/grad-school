@@ -6,8 +6,4 @@ const grad = function (input) {
   return new View(data)
 }
 
-grad.prototype.plugin = function (fn) {
-  fn(this)
-}
-
 export default grad

@@ -21,7 +21,7 @@ const parseOne = function (str) {
     str = str.replace(/^\[/, '')
     str = str.replace(/\]$/, '')
     let list = str.split(/,/)
-    list = list.map(s => s.trim()).filter(s => s)
+    list = list.map((s) => s.trim()).filter(Boolean)
     list = list.map(label => {
       return validate({ id: label })
     })
@@ -37,7 +37,7 @@ const parseLine = function (str) {
   split.forEach(s => {
     list = list.concat(parseOne(s))
   })
-  list = list.filter(s => s)
+  list = list.filter(Boolean)
   let node = list[0]
   for (let i = 1; i < list.length; i += 1) {
     node.children.push(list[i])
