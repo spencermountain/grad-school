@@ -4,6 +4,49 @@ import esm from '../builds/grad-school.mjs'
 import cjs from '../builds/grad-school.cjs'
 
 for (const [format, grad] of Object.entries({ source, esm, cjs })) {
+  test(`${format}: cyclic input is rejected`, t => {
+    const self = { id: 'self', children: [] }
+    self.children.push(self)
+    t.throws(() => grad(self), /cyclic input/, 'nested self-cycle')
+    const a = { id: 'a', children: [] }
+    const b = { id: 'b', children: [a] }
+    a.children.push(b)
+    t.throws(() => grad({ children: [a] }), /cyclic input/, 'nested multi-node cycle')
+    t.throws(() => grad([{ id: 'a', parent: 'a' }]), /cyclic input/, 'flat self-cycle')
+    const rows = [
+      { id: 'root' },
+      { id: 'a', parent: 'b' },
+      { id: 'b', parent: 'c' },
+      { id: 'c', parent: 'a' },
+    ]
+    const before = JSON.stringify(rows)
+    t.throws(() => grad(rows), /cyclic input/, 'disconnected flat cycle')
+    t.equal(JSON.stringify(rows), before, 'rejected input is not mutated')
+    t.end()
+  })
+
+  test(`${format}: cycle checks accept valid shared and deep inputs`, t => {
+    const shared = { id: 'shared' }
+    const g = grad({ children: [
+      { id: 'a', children: [shared] },
+      { id: 'b', children: [shared] },
+    ] })
+    t.equal(g.get('a/shared').found, true, 'shared node is not a cycle')
+    t.equal(g.get('b/shared').found, true)
+    t.equal(grad([]).children.length, 0)
+    t.equal(grad({}).children.length, 0)
+    const rows = []
+    let nested = { id: '0' }
+    for (let i = 1; i <= 10000; i += 1) {
+      rows.push({ id: String(i - 1), parent: String(i) })
+      nested = { id: String(i), children: [nested] }
+    }
+    rows.push({ id: '10000' })
+    t.equal(grad(nested).list().length, 10001, 'deep nested input avoids recursion')
+    t.equal(grad(rows).list().length, 10002, 'deep child-first flat input')
+    t.end()
+  })
+
   test(`${format}: subtree flat exports have no external parent`, t => {
     const g = grad('a -> b -> c')
     const b = g.get('a/b')

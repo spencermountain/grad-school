@@ -1,12 +1,13 @@
 import fromText from './from-text.js'
 import fromArray from './from-array.js'
-import byDepth from '../crawl/crawl.js'
+import checkCycles from './check-cycles.js'
 import validate from './_validate.js'
 import { isArray } from '../lib/_lib.js'
 
 const fromNested = json => {
-  const rows = byDepth(json)
-  rows.forEach(validate)
+  for (const node of checkCycles([json])) {
+    validate(node)
+  }
   return json
 }
 

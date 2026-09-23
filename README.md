@@ -43,6 +43,9 @@ library is like, 3kb.
 
 we support 3 formats:
 
+JSON input is checked for cycles when parsed. A cycle throws an error;
+direct edits to `.children` after parsing are not checked.
+
 ### String-format
 
 this is a pretty-flexible way to declare a graph, using indents and `->` syntax. It's harder to add metadata to nodes.

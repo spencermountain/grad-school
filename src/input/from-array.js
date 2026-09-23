@@ -1,4 +1,5 @@
 import validate from './_validate.js'
+import checkCycles from './check-cycles.js'
 
 // turn parent-index rows into nested json
 const fromArray = function (rows) {
@@ -22,6 +23,7 @@ const fromArray = function (rows) {
     // no parent, add it to root
     root.children.push(node)
   })
+  checkCycles(rows)
   return root
 }
 export default fromArray
