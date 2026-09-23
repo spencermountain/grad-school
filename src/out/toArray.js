@@ -7,7 +7,6 @@ const toArray = function (json) {
     delete node.children //no-longer needed
     const parents = node._cache.parents
     node.parent = i > 0 && parents.length > 0 ? parents[parents.length - 1] : null
-    delete node._cache
     return node
   })
   // should we show the root?
