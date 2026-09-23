@@ -2,7 +2,7 @@ import test from 'tape'
 import grad from '../src/index.js'
 
 test('input format tests', function (t) {
-  let rows = [
+  const rows = [
     { id: 'a', parent: null },
     { id: 'b', parent: null },
     { id: 'a1', parent: 'a' },
@@ -27,9 +27,9 @@ a
         a21
 b
 `
-  let rowG = grad(rows)
-  let nestG = grad(nested)
-  let strG = grad(str)
+  const rowG = grad(rows)
+  const nestG = grad(nested)
+  const strG = grad(str)
   t.equal(rowG.out('text'), nestG.out('text'), 'row-is-equal')
   t.equal(strG.out('text'), nestG.out('text'), 'str-is-equal')
   t.end()

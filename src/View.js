@@ -3,11 +3,10 @@ import { normalize, getByPointer, isArray } from './lib/_lib.js'
 import byDepth from './crawl/crawl.js'
 import { cacheDown, cacheUp } from './crawl/cache.js'
 import fillDown from './crawl/fillDown.js'
-const hasSlash = /\//
 import validate from './input/_validate.js'
 
 class View {
-  constructor(json = {}) {
+  constructor(json = validate({})) {
     Object.defineProperty(this, 'json', {
       enumerable: false,
       value: json,
@@ -21,24 +20,19 @@ class View {
     return this.json.id
   }
   get found() {
-    return this.json.id || this.json.children.length > 0
+    return Boolean(this.json.id || this.json.children.length > 0)
   }
   props(input = {}) {
-    let props = this.json.props || {}
+    const props = this.json.props || {}
     if (typeof input === 'string') {
-      props[input] = true
+      input = { [input]: true }
     }
     this.json.props = Object.assign(props, input)
     return this
   }
   get(id) {
     id = normalize(id)
-    if (!hasSlash.test(id)) {
-      // lookup by label name
-      let found = this.json.children.find(obj => obj.id === id)
-      return new View(found)
-    }
-    let obj = getByPointer(this.json, id) || validate({})
+    const obj = getByPointer(this.json, id) || validate({})
     return new View(obj)
   }
   add(id, props = {}) {
@@ -47,7 +41,7 @@ class View {
       return this
     }
     id = normalize(id)
-    let node = validate({ id, props })
+    const node = validate({ id, props: { ...props } })
     this.json.children.push(node)
     return new View(node)
   }
@@ -57,7 +51,7 @@ class View {
     return this
   }
   nodes() {
-    let nodes = byDepth(this.json)
+    const nodes = byDepth(this.json)
     return nodes.map(node => {
       node = Object.assign({}, node)
       delete node.children
@@ -76,18 +70,12 @@ class View {
     return this
   }
   depth() {
-    cacheDown(this.json)
-    let nodes = byDepth(this.json)
-    let max = nodes.length > 1 ? 1 : 0
-    // count # of parents
-    nodes.forEach(node => {
-      if (node._cache.parents.length === 0) {
-        return
-      }
-      let count = node._cache.parents.length + 1
-      if (count > max) {
-        max = count
-      }
+    let max = this.id ? 1 : 0
+    const depths = new Map([[this.json, max]])
+    byDepth(this.json, (parent, child) => {
+      const depth = depths.get(parent) + 1
+      depths.set(child, depth)
+      max = Math.max(max, depth)
     })
     return max
   }

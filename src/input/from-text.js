@@ -1,6 +1,6 @@
 import validate from './_validate.js'
 
-const isComment = /^ *(#|\/\/)/
+const isComment = /^[ \t]*(#|\/\/)/
 
 const indentLevel = str => {
   const reg = /^( {2}|\t)/
@@ -32,7 +32,7 @@ const parseOne = function (str) {
 
 // a -> a1 -> a2
 const parseLine = function (str) {
-  let split = str.trim().split(/->/)
+  const split = str.trim().split(/->/)
   let list = []
   split.forEach(s => {
     list = list.concat(parseOne(s))
@@ -48,7 +48,7 @@ const parseLine = function (str) {
 
 // find the parent
 const rollBackWards = function (list, i) {
-  let have = list[i].indent
+  const have = list[i].indent
   for (; i >= 0; i -= 1) {
     if (list[i].indent < have) {
       return list[i]
@@ -59,13 +59,13 @@ const rollBackWards = function (list, i) {
 
 const byIndent = function (list) {
   // add them to nth child
-  let root = { children: [] }
+  const root = { children: [] }
   list.forEach((o, i) => {
     if (o.indent === 0) {
       // add it to the root
       root.children = root.children.concat(o.node)
     } else if (list[i - 1]) {
-      let parent = rollBackWards(list, i)
+      const parent = rollBackWards(list, i)
       // add it to the deepest node last line
       parent.node.children.push(o.node)
     }
@@ -74,14 +74,21 @@ const byIndent = function (list) {
 }
 
 const fromText = function (txt) {
-  let lines = txt.split(/\r?\n/)
-  let list = []
+  const lines = txt.split(/\r?\n/)
+  const list = []
   lines.forEach(line => {
     if (!line.trim() || isComment.test(line)) {
       return
     }
-    let indent = indentLevel(line)
-    list.push({ indent: indent, node: parseLine(line) })
+    const indent = indentLevel(line)
+    const node = parseLine(line)
+    if (node) {
+      list.push({ indent, node })
+    }
+  })
+  const base = list.reduce((min, line) => Math.min(min, line.indent), Infinity)
+  list.forEach(line => {
+    line.indent -= base
   })
   let root = byIndent(list)
   root = validate(root)

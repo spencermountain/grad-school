@@ -8,7 +8,7 @@ const toText = function (json, color) {
     arrow = c.dim('→ ')
   }
   let txt = ''
-  let rows = byDepth(json)
+  const rows = byDepth(json)
   rows.forEach((node, i) => {
     let label = node.id || ''
     if (color) {
@@ -17,7 +17,7 @@ const toText = function (json, color) {
     if (i === 0 && !node.id) {
       return //skip empty root
     }
-    let depth = node._cache.parents.length
+    const depth = node._cache.parents.length
     txt += indent.repeat(depth) + arrow + label + '\n'
   })
   return txt

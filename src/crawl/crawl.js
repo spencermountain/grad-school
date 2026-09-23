@@ -18,21 +18,22 @@
 
 // [a, a1, b, b1]
 const byDepth = (root, fn) => {
-  let list = []
-  let queue = [root]
+  const list = []
+  const queue = [root]
   while (queue.length > 0) {
     // get first
-    let node = queue.pop()
+    const node = queue.pop()
     // add to list
     list.push(node)
     // add kids to queue
     if (node.children) {
-      node.children.forEach(child => {
+      for (let i = node.children.length - 1; i >= 0; i -= 1) {
+        const child = node.children[i]
         if (fn) {
           fn(node, child)
         }
         queue.push(child)
-      })
+      }
     }
   }
   return list

@@ -43,10 +43,15 @@ library is like, 3kb.
 
 we support 3 formats:
 
+JSON input is checked for cycles when parsed. A cycle throws an error;
+direct edits to `.children` after parsing are not checked.
+
 ### String-format
 
 this is a pretty-flexible way to declare a graph, using indents and `->` syntax. It's harder to add metadata to nodes.
 It's a bit like how graphviz does it:
+
+Common leading indentation is ignored, so template strings can be indented with your code.
 
 ```js
 let str = `
@@ -70,12 +75,12 @@ let nodes = [
   { id: 'a2', parent: 'a' },
   { id: 'a21', parent: 'a2' },
 ]
-let g = grad(str).debug()
+let g = grad(nodes).debug()
 /*
   → a
+      → a1
       → a2
             → a21
-      → a1
   → b
 */
 ```
@@ -94,12 +99,12 @@ let nodes = {
     { id: 'b' },
   ],
 }
-let g = grad(str).debug()
+let g = grad(nodes).debug()
 /*
   → a
+      → a1
       → a2
             → a21
-      → a1
   → b
 */
 ```
@@ -118,14 +123,19 @@ let g = grad('a -> a1')
 g.add('b').add(['b1', 'b2'])
 g.add('c')
 
-// get a node by a json-pointer
-g.get('/b/b1').remove()
+// remove a child through its parent
+g.get('b').remove('b1')
 console.log(g.get('b').children)
 
 console.log(g.out())
 ```
 
 ## Fill-down
+
+`fillDown()` mutates properties in place. Call it once after setting up your properties;
+calling it again concatenates inherited arrays again.
+Arrays, sets, and objects merge with values of the same kind. When kinds differ,
+the child's explicit value wins, including `false`, `0`, an empty string, or `null`.
 
 you can 'deduce', down the tree, and intellegently merge the properties of each node:
 

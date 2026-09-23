@@ -1,0 +1,4 @@
+minimumReleaseAgeExclude:
+  - rollup-plugin-filesize-check@2.0.0
+  - tap-dancer@0.4.2
+  - rollup-plugin-filesize-check@2.0.1
