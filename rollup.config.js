@@ -28,4 +28,12 @@ export default [
     output: [{ banner: banner, file: 'builds/grad-school.mjs', format: 'esm' }],
     plugins: [terser({ compress: { passes: 3 } })]
   },
+  {
+    input: 'src/core.js',
+    output: [
+      { banner, file: 'builds/grad-school-core.mjs', format: 'esm' },
+      { banner, file: 'builds/grad-school-core.cjs', format: 'cjs' }
+    ],
+    plugins: [terser({ compress: { passes: 3 } })]
+  },
 ]

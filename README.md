@@ -114,6 +114,42 @@ let g = grad(nodes).debug()
 
 ## JS API
 
+### Core functions
+
+For array input and property inheritance without the full chainable API, use
+the smaller `grad-school/core` entry point:
+
+```js
+import { fromArray, cache, fillDown, toArray } from 'grad-school/core'
+
+const graph = fromArray([
+  { id: 'noun', props: { isNoun: true } },
+  { id: 'person', parent: 'noun', props: { isPerson: true } }
+])
+cache(graph)
+fillDown(graph)
+const rows = toArray(graph)
+// person.props is now { isPerson: true, isNoun: true }
+```
+
+CommonJS is also supported:
+
+```js
+const { fromArray, cache, fillDown, toArray } = require('grad-school/core')
+```
+
+`fromArray(rows)` returns a nested graph with a synthetic root. `cache(graph)`
+populates ancestor and descendant IDs in `_cache`; call it before `toArray(graph)`
+and again after changing the graph structure. `fillDown(graph)` inherits parent
+properties. Both `cache` and `fillDown` mutate the graph and return `undefined`;
+they are not chainable. Call `fillDown` once, since repeated calls concatenate
+inherited arrays again. `toArray(graph)` returns flat rows with `parent` IDs,
+retaining `props` and `_cache`.
+
+The existing `import grad from 'grad-school'` API is unchanged.
+
+### Chainable API
+
 you can also easily mess-around with the graph:
 
 ```js
