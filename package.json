@@ -1,6 +1,6 @@
 {
   "name": "grad-school",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "graph logic and traversal",
   "license": "MIT",
   "repository": "github:spencermountain/grad-school",

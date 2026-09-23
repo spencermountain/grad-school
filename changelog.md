@@ -1,3 +1,6 @@
+### 0.0.7 - [Sep 2026]
+- **[fix]** - node._cache.parents regression
+
 ### 0.0.6 - [Sep 2026]
 - **[change]** - improve input validation
 - **[change]** - simplify fill-down and validate inputs

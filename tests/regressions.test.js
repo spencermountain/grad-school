@@ -54,11 +54,12 @@ for (const [format, grad] of Object.entries({ source, esm, cjs })) {
       { id: 'b', props: {}, parent: null },
       { id: 'c', props: {}, parent: 'b' },
     ]
-    t.deepEqual(b.out('flat'), expected, 'fresh subtree export')
+    const portable = rows => rows.map(({ id, props, parent }) => ({ id, props, parent }))
+    t.deepEqual(portable(b.out('flat')), expected, 'fresh subtree export')
     g.out('text')
     g.cache()
     const rows = b.out('flat')
-    t.deepEqual(rows, expected, 'cached ancestors stay outside the export')
+    t.deepEqual(portable(rows), expected, 'parent links stay within the export')
     t.equal(grad(rows).get('b/c').found, true, 'subtree round trip')
     t.deepEqual(b.json._cache.parents, ['a'], 'export preserves ancestor cache')
     t.equal(g.out('flat')[1].parent, 'a', 'full graph keeps its parent links')
@@ -173,10 +174,24 @@ for (const [format, grad] of Object.entries({ source, esm, cjs })) {
     t.deepEqual(rows.map(node => [node.id, node.parent]), [
       ['a', null], ['b', 'a'], ['c', 'b'],
     ])
-    t.ok(rows.every(node => !('children' in node) && !('_cache' in node)))
+    t.ok(rows.every(node => !('children' in node)))
     t.equal(grad(rows).get('a/b/c').id, 'c', 'flat output can be parsed again')
     rows[0].id = 'changed'
     t.equal(g.get('a').id, 'a', 'output rows are copies')
+    t.end()
+  })
+
+  test(`${format}: flat and array output retain cache metadata`, t => {
+    const g = grad('a -> b -> c')
+    for (const output of ['flat', 'array']) {
+      const rows = g.out(output)
+      t.deepEqual(rows.map(node => node._cache.parents), [[], ['a'], ['a', 'b']], output)
+    }
+    g.cache()
+    for (const output of ['flat', 'array']) {
+      const rows = g.out(output)
+      t.deepEqual(rows.map(node => node._cache.children), [['b', 'c'], ['c'], []], output)
+    }
     t.end()
   })
 
