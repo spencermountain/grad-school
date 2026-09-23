@@ -1,6 +1,8 @@
 ### 0.0.6 - [Sep 2026]
-
-- **[update]** -
+- **[change]** - improve input validation
+- **[change]** - simplify fill-down and validate inputs
+- **[fix]** - linting 
+- **[update]** - dependencies 
 
 ### 0.0.5 - [June 2022]
 

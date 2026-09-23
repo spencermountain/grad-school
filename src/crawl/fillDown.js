@@ -1,9 +1,19 @@
 import { isSet, isObject, isArray } from '../lib/_lib.js'
 import byDepth from './crawl.js'
 
-// recursive merge of objects
+// Only compatible collections are merged; explicit child values take precedence.
+const kind = value => {
+  if (isSet(value)) return 'set'
+  if (isArray(value)) return 'array'
+  if (isObject(value)) return 'object'
+  return 'scalar'
+}
+
 const mergeDeep = (props, parent) => {
   Object.keys(parent).forEach(k => {
+    if (props[k] !== undefined && kind(props[k]) !== kind(parent[k])) {
+      return
+    }
     // merge sets
     if (isSet(parent[k])) {
       const set = props[k] || new Set()

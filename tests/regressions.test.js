@@ -4,6 +4,63 @@ import esm from '../builds/grad-school.mjs'
 import cjs from '../builds/grad-school.cjs'
 
 for (const [format, grad] of Object.entries({ source, esm, cjs })) {
+  test(`${format}: subtree flat exports have no external parent`, t => {
+    const g = grad('a -> b -> c')
+    const b = g.get('a/b')
+    const expected = [
+      { id: 'b', props: {}, parent: null },
+      { id: 'c', props: {}, parent: 'b' },
+    ]
+    t.deepEqual(b.out('flat'), expected, 'fresh subtree export')
+    g.out('text')
+    g.cache()
+    const rows = b.out('flat')
+    t.deepEqual(rows, expected, 'cached ancestors stay outside the export')
+    t.equal(grad(rows).get('b/c').found, true, 'subtree round trip')
+    t.deepEqual(b.json._cache.parents, ['a'], 'export preserves ancestor cache')
+    t.equal(g.out('flat')[1].parent, 'a', 'full graph keeps its parent links')
+    t.equal(g.get('a/b/c').out('flat')[0].parent, null, 'leaf export')
+    t.end()
+  })
+
+  test(`${format}: common indentation is normalized`, t => {
+    const expected = grad('a\n  b\nc').out('flat')
+    for (const input of [
+      '\n  a\n    b\n  c\n',
+      '\n\ta\n\t\tb\n\tc\n',
+      '# comment\n[]\n->\n    a\n      b\n    c\n',
+      '\r\n  a\r\n    b\r\n  c\r\n',
+    ]) {
+      t.deepEqual(grad(input).out('flat'), expected)
+    }
+    t.deepEqual(grad('\n  # comment\n  []\n').out('flat'), [])
+    t.end()
+  })
+
+  test(`${format}: incompatible inherited values preserve child overrides`, t => {
+    const values = [new Set(['parent']), ['parent'], { parent: true }, true, false, 0, '', null]
+    for (const parent of values) {
+      for (const child of values) {
+        // Matching collection types have their own merge assertions below.
+        if (parent === child) continue
+        const g = grad('a -> b')
+        g.props({ value: parent })
+        g.get('a').props({ value: child })
+        g.fillDown()
+        t.deepEqual(g.get('a').json.props.value, child, 'child override is preserved')
+      }
+    }
+    const g = grad('a -> b')
+    g.props({ set: new Set(['parent']), array: ['parent'], object: { parent: true, shared: 'parent' } })
+    g.get('a').props({ set: new Set(['child']), array: ['child'], object: { child: true, shared: 'child' } })
+    g.fillDown()
+    const props = g.get('a/b').json.props
+    t.deepEqual(props.set, new Set(['child', 'parent']))
+    t.deepEqual(props.array, ['parent', 'child'])
+    t.deepEqual(props.object, { parent: true, child: true, shared: 'child' })
+    t.end()
+  })
+
   test(`${format}: added siblings have independent properties`, t => {
     const g = grad('')
     g.add(['a', 'b'])

@@ -48,6 +48,8 @@ we support 3 formats:
 this is a pretty-flexible way to declare a graph, using indents and `->` syntax. It's harder to add metadata to nodes.
 It's a bit like how graphviz does it:
 
+Common leading indentation is ignored, so template strings can be indented with your code.
+
 ```js
 let str = `
 a -> a2 -> a21
@@ -129,6 +131,8 @@ console.log(g.out())
 
 `fillDown()` mutates properties in place. Call it once after setting up your properties;
 calling it again concatenates inherited arrays again.
+Arrays, sets, and objects merge with values of the same kind. When kinds differ,
+the child's explicit value wins, including `false`, `0`, an empty string, or `null`.
 
 you can 'deduce', down the tree, and intellegently merge the properties of each node:
 

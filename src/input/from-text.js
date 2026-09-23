@@ -86,6 +86,10 @@ const fromText = function (txt) {
       list.push({ indent, node })
     }
   })
+  const base = list.reduce((min, line) => Math.min(min, line.indent), Infinity)
+  list.forEach(line => {
+    line.indent -= base
+  })
   let root = byIndent(list)
   root = validate(root)
   return root

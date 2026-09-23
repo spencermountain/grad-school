@@ -31,7 +31,7 @@
     "src/"
   ],
   "devDependencies": {
-    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-terser": "1.0.0",
     "eslint": "10.11.0",
     "rollup": "4.63.4",
     "tap-dancer": "0.4.2",

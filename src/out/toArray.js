@@ -2,11 +2,11 @@ import byDepth from '../crawl/crawl.js'
 
 const toArray = function (json) {
   let nodes = byDepth(json)
-  nodes = nodes.map(node => {
+  nodes = nodes.map((node, i) => {
     node = Object.assign({}, node)
     delete node.children //no-longer needed
     const parents = node._cache.parents
-    node.parent = parents.length > 0 ? parents[parents.length - 1] : null
+    node.parent = i > 0 && parents.length > 0 ? parents[parents.length - 1] : null
     delete node._cache
     return node
   })

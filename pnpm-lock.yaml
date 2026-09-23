@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@rollup/plugin-terser':
-        specifier: ^1.0.0
+        specifier: 1.0.0
         version: 1.0.0(rollup@4.63.4)
       eslint:
         specifier: 10.11.0
