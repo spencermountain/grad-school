@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import terser from '@rollup/plugin-terser'
 import fs from 'node:fs'
+import sizeCheck from 'rollup-plugin-filesize-check'
+
 
 const pkg = JSON.parse(fs.readFileSync('./package.json').toString())
 console.log('\n 📦  - running rollup..\n')
@@ -12,11 +14,18 @@ export default [
   {
     input: 'src/index.js',
     output: [{ banner: banner, file: 'builds/grad-school.cjs', format: 'umd', name: 'gradSchool' }],
-    plugins: [terser()],
+    plugins: [
+      terser({ compress: { passes: 3 } }),
+      sizeCheck({
+        expect: 4, // sizes in kb
+        warn: 4, // acceptable change (+/-)
+        throw: 10 // unacceptable change (+/-)
+      })
+    ]
   },
   {
     input: 'src/index.js',
     output: [{ banner: banner, file: 'builds/grad-school.mjs', format: 'esm' }],
-    plugins: [terser()],
+    plugins: [terser({ compress: { passes: 3 } })]
   },
 ]

@@ -3,7 +3,6 @@ import { normalize, getByPointer, isArray } from './lib/_lib.js'
 import byDepth from './crawl/crawl.js'
 import { cacheDown, cacheUp } from './crawl/cache.js'
 import fillDown from './crawl/fillDown.js'
-const hasSlash = /\//
 import validate from './input/_validate.js'
 
 class View {
@@ -33,11 +32,6 @@ class View {
   }
   get(id) {
     id = normalize(id)
-    if (!hasSlash.test(id)) {
-      // lookup by label name
-      const found = this.json.children.find(obj => obj.id === id)
-      return new View(found)
-    }
     const obj = getByPointer(this.json, id) || validate({})
     return new View(obj)
   }

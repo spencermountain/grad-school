@@ -1,6 +1,6 @@
 export const isObject = item => item && typeof item === 'object' && !Array.isArray(item)
 
-export const isArray = arr => Object.prototype.toString.call(arr) === '[object Array]'
+export const isArray = Array.isArray
 
 export const isSet = item => item instanceof Set
 
