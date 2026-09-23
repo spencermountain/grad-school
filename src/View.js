@@ -7,7 +7,7 @@ const hasSlash = /\//
 import validate from './input/_validate.js'
 
 class View {
-  constructor(json = {}) {
+  constructor(json = validate({})) {
     Object.defineProperty(this, 'json', {
       enumerable: false,
       value: json,
@@ -21,12 +21,12 @@ class View {
     return this.json.id
   }
   get found() {
-    return this.json.id || this.json.children.length > 0
+    return Boolean(this.json.id || this.json.children.length > 0)
   }
   props(input = {}) {
     let props = this.json.props || {}
     if (typeof input === 'string') {
-      props[input] = true
+      input = { [input]: true }
     }
     this.json.props = Object.assign(props, input)
     return this

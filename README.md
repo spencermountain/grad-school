@@ -70,7 +70,7 @@ let nodes = [
   { id: 'a2', parent: 'a' },
   { id: 'a21', parent: 'a2' },
 ]
-let g = grad(str).debug()
+let g = grad(nodes).debug()
 /*
   → a
       → a2
@@ -94,7 +94,7 @@ let nodes = {
     { id: 'b' },
   ],
 }
-let g = grad(str).debug()
+let g = grad(nodes).debug()
 /*
   → a
       → a2
@@ -118,14 +118,17 @@ let g = grad('a -> a1')
 g.add('b').add(['b1', 'b2'])
 g.add('c')
 
-// get a node by a json-pointer
-g.get('/b/b1').remove()
+// remove a child through its parent
+g.get('b').remove('b1')
 console.log(g.get('b').children)
 
 console.log(g.out())
 ```
 
 ## Fill-down
+
+`fillDown()` mutates properties in place. Call it once after setting up your properties;
+calling it again concatenates inherited arrays again.
 
 you can 'deduce', down the tree, and intellegently merge the properties of each node:
 

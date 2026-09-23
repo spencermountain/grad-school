@@ -12,26 +12,25 @@ const cacheDown = root => {
 
 // count parents
 const cacheUp = root => {
-  let nodes = byDepth(root, (parent, child) => {
-    if (parent.id) {
-      parent._cache.parents = parent._cache.parents || []
-      parent._cache.children = parent._cache.children || []
-      child._cache.parents = parent._cache.parents.concat([parent.id])
-    }
+  let nodes = byDepth(root)
+  nodes.forEach(node => {
+    node._cache.parents = []
+    node._cache.children = []
   })
-  let byId = {}
+  cacheDown(root)
+  let byId = new Map()
   nodes.forEach(node => {
     if (node.id) {
-      byId[node.id] = node
+      byId.set(node.id, node)
     }
   })
   nodes.forEach(node => {
     node._cache.parents.forEach(id => {
-      if (byId.hasOwnProperty(id)) {
-        byId[id]._cache.children.push(node.id)
+      if (byId.has(id)) {
+        byId.get(id)._cache.children.push(node.id)
       }
     })
   })
-  root._cache.children = Object.keys(byId)
+  root._cache.children = [...byId.keys()]
 }
 export { cacheDown, cacheUp }

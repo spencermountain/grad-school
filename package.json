@@ -17,7 +17,8 @@
   "scripts": {
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent",
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "prepack": "npm test",
+    "test": "npm run build && tape \"./tests/**/*.test.js\"",
     "lint": "eslint ."
   },
   "files": [
@@ -36,12 +37,11 @@
     "printWidth": 100
   },
   "devDependencies": {
-    "rollup": "4.63.4",
     "@rollup/plugin-terser": "^1.0.0",
+    "eslint": "10.5.0",
+    "rollup": "4.63.4",
     "tap-dancer": "0.4.0",
     "tape": "5.10.2"
   },
-  "license": "MIT",
-  "dependencies": {
-  }
+  "license": "MIT"
 }
