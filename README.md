@@ -8,7 +8,7 @@
     <img src="https://api.codacy.com/project/badge/Coverage/fc03e2761c8c471c8f84141abf2704de" />
   </a> -->
   <a href="https://unpkg.com/grad-school/builds/grad-school.mjs">
-     <img src="https://badge-size.herokuapp.com/spencermountain/grad-school/master/builds/grad-school.mjs" />
+     <img src="https://img.shields.io/bundlephobia/min/grad-school" />
   </a>
   <!-- <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
     <img src="https://img.shields.io/badge/stability-stable-green.svg?style=flat-square" />

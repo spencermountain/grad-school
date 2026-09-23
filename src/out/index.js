@@ -14,7 +14,7 @@ const out = function (root, label) {
     return root
   }
   if (label === 'debug') {
-    console.log(toText(root, true)) // eslint-disable-line
+    console.log(toText(root, true)) // eslint-disable-line no-console
     return null
   }
   if (fmts.hasOwnProperty(label)) {

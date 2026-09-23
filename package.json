@@ -22,7 +22,7 @@
   "scripts": {
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent",
-    "prepack": "npm test",
+    "prepack": "npm run lint && npm test",
     "test": "npm run build && tape \"./tests/**/*.test.js\" | tap-dancer",
     "lint": "eslint ."
   },
