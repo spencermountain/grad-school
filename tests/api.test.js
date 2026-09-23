@@ -2,7 +2,7 @@ import test from 'tape'
 import grad from '../src/index.js'
 
 test('add/remove', function (t) {
-  let str = `
+  const str = `
 a -> a1
 b -> b1 -> b11
 `
@@ -34,7 +34,7 @@ test('depth', function (t) {
   g = grad('foo -> bar -> baz')
   t.equal(g.depth(), 3, 'three-depth')
 
-  let str = `
+  const str = `
 foo -> bar -> baz
 b -> sdf
     `

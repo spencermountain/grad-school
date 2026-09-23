@@ -2,11 +2,11 @@ import test from 'tape'
 import grad from '../src/index.js'
 
 test('fulldown-basic', function (t) {
-  let str = `
+  const str = `
 a -> a1
 b -> b1 -> b11
 `
-  let g = grad(str)
+  const g = grad(str)
   let rows = g.out('array')
   t.equal(rows.length, 5, '5 rows')
 
@@ -23,9 +23,9 @@ b -> b1 -> b11
   leaf = g.get('b/b1/b11')
   t.equal(leaf.json.props.root, true, 'there now')
 
-  let a = g.get('a').props({ cool: true })
+  const a = g.get('a').props({ cool: true })
   a.fillDown()
-  let a1 = a.get('a1')
+  const a1 = a.get('a1')
   t.equal(a1.json.props.root, true, 'here too')
   t.equal(a1.json.props.cool, true, 'mid-to-down')
   t.equal(leaf.json.props.cool, undefined, 'not-cross')
@@ -34,11 +34,11 @@ b -> b1 -> b11
 })
 
 test('fill-down array', function (t) {
-  let str = `
+  const str = `
 a -> a1
 b -> b1 -> b11
 `
-  let g = grad(str)
+  const g = grad(str)
   g.get('a').props({ list: ['fromA', 'also'] })
   g.props({ list: ['fromRoot'] })
   g.fillDown()
@@ -51,11 +51,11 @@ b -> b1 -> b11
 })
 
 test('fill-down set', function (t) {
-  let str = `
+  const str = `
 a -> a1
 b -> b1 -> b11
 `
-  let g = grad(str)
+  const g = grad(str)
   g.get('a').props({ list: new Set(['fromA', 'also']) })
   g.props({ list: new Set(['fromRoot']) })
   g.fillDown()
@@ -68,14 +68,14 @@ b -> b1 -> b11
 })
 
 test('fill-down key-val', function (t) {
-  let str = `
+  const str = `
 a
 b -> b1
 c -> c1 -> c2
 `
-  let g = grad(str)
+  const g = grad(str)
   g.props({ isCool: true })
-  let c1 = g.get('c/c1')
+  const c1 = g.get('c/c1')
   c1.props({ isCool: false })
   g.fillDown()
   t.equal(g.get('b').json.props.isCool, true, 'b')

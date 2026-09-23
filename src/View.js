@@ -24,7 +24,7 @@ class View {
     return Boolean(this.json.id || this.json.children.length > 0)
   }
   props(input = {}) {
-    let props = this.json.props || {}
+    const props = this.json.props || {}
     if (typeof input === 'string') {
       input = { [input]: true }
     }
@@ -35,10 +35,10 @@ class View {
     id = normalize(id)
     if (!hasSlash.test(id)) {
       // lookup by label name
-      let found = this.json.children.find(obj => obj.id === id)
+      const found = this.json.children.find(obj => obj.id === id)
       return new View(found)
     }
-    let obj = getByPointer(this.json, id) || validate({})
+    const obj = getByPointer(this.json, id) || validate({})
     return new View(obj)
   }
   add(id, props = {}) {
@@ -47,7 +47,7 @@ class View {
       return this
     }
     id = normalize(id)
-    let node = validate({ id, props })
+    const node = validate({ id, props })
     this.json.children.push(node)
     return new View(node)
   }
@@ -57,7 +57,7 @@ class View {
     return this
   }
   nodes() {
-    let nodes = byDepth(this.json)
+    const nodes = byDepth(this.json)
     return nodes.map(node => {
       node = Object.assign({}, node)
       delete node.children
@@ -77,14 +77,14 @@ class View {
   }
   depth() {
     cacheDown(this.json)
-    let nodes = byDepth(this.json)
+    const nodes = byDepth(this.json)
     let max = nodes.length > 1 ? 1 : 0
     // count # of parents
     nodes.forEach(node => {
       if (node._cache.parents.length === 0) {
         return
       }
-      let count = node._cache.parents.length + 1
+      const count = node._cache.parents.length + 1
       if (count > max) {
         max = count
       }

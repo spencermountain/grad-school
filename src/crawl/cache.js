@@ -12,13 +12,13 @@ const cacheDown = root => {
 
 // count parents
 const cacheUp = root => {
-  let nodes = byDepth(root)
+  const nodes = byDepth(root)
   nodes.forEach(node => {
     node._cache.parents = []
     node._cache.children = []
   })
   cacheDown(root)
-  let byId = new Map()
+  const byId = new Map()
   nodes.forEach(node => {
     if (node.id) {
       byId.set(node.id, node)

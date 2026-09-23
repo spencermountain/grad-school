@@ -5,7 +5,7 @@ import validate from './_validate.js'
 import { isArray } from '../lib/_lib.js'
 
 const fromNested = json => {
-  let rows = byDepth(json)
+  const rows = byDepth(json)
   rows.forEach(validate)
   return json
 }

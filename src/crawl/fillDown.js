@@ -6,13 +6,13 @@ const mergeDeep = (props, parent) => {
   Object.keys(parent).forEach(k => {
     // merge sets
     if (isSet(parent[k])) {
-      let set = props[k] || new Set()
+      const set = props[k] || new Set()
       props[k] = new Set([...set, ...parent[k]])
       return
     }
     // merge an object
     if (isObject(parent[k])) {
-      let obj = props[k] || {}
+      const obj = props[k] || {}
       props[k] = Object.assign({}, parent[k], obj)
       return
     }

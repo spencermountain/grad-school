@@ -2,7 +2,7 @@ import parse from './input/index.js'
 import View from './View.js'
 
 const grad = function (input) {
-  let data = parse(input)
+  const data = parse(input)
   return new View(data)
 }
 

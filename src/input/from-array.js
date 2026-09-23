@@ -2,16 +2,16 @@ import validate from './_validate.js'
 
 // turn parent-index rows into nested json
 const fromArray = function (rows) {
-  let index = new Map()
+  const index = new Map()
   rows = rows.map(node => validate({ ...node, children: [] }))
   rows.forEach(node => {
     index.set(node.id, node)
   })
-  let root = validate({})
+  const root = validate({})
   rows.forEach(node => {
     if (node.parent) {
       if (index.has(node.parent)) {
-        let parent = index.get(node.parent)
+        const parent = index.get(node.parent)
         delete node.parent //no-longer needed
         parent.children.push(node)
       } else {
