@@ -1,3 +1,6 @@
+### 0.0.8 - [Sep 2026]
+- **[change]** - support import {} from 'grad-school/core'
+
 ### 0.0.7 - [Sep 2026]
 - **[fix]** - node._cache.parents regression
 

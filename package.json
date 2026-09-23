@@ -1,6 +1,6 @@
 {
   "name": "grad-school",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "graph logic and traversal",
   "license": "MIT",
   "repository": "github:spencermountain/grad-school",
@@ -11,6 +11,11 @@
       "require": "./builds/grad-school.cjs",
       "import": "./builds/grad-school.mjs",
       "default": "./builds/grad-school.cjs"
+    },
+    "./core": {
+      "require": "./builds/grad-school-core.cjs",
+      "import": "./builds/grad-school-core.mjs",
+      "default": "./builds/grad-school-core.cjs"
     }
   },
   "main": "./src/index.js",
