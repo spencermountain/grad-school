@@ -53,9 +53,8 @@ class View {
   nodes() {
     const nodes = byDepth(this.json)
     return nodes.map(node => {
-      node = Object.assign({}, node)
-      delete node.children
-      return node
+      const { children: _children, ...row } = node // eslint-disable-line no-unused-vars
+      return row
     })
   }
   cache() {
@@ -76,7 +75,7 @@ class View {
       const depth = depths.get(parent) + 1
       depths.set(child, depth)
       max = Math.max(max, depth)
-    })
+    }, false)
     return max
   }
   out(fmt) {

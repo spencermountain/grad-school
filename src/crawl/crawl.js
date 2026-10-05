@@ -17,14 +17,16 @@
 // }
 
 // [a, a1, b, b1]
-const byDepth = (root, fn) => {
-  const list = []
+// Visitor-only callers can skip collecting nodes.
+const byDepth = (root, fn, collect = true) => {
+  const list = collect ? [] : null
   const queue = [root]
   while (queue.length > 0) {
     // get first
     const node = queue.pop()
-    // add to list
-    list.push(node)
+    if (collect) {
+      list.push(node)
+    }
     // add kids to queue
     if (node.children) {
       for (let i = node.children.length - 1; i >= 0; i -= 1) {

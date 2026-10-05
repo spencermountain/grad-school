@@ -43,7 +43,7 @@ const mergeDeep = (props, parent) => {
 const fillDown = root => {
   byDepth(root, (parent, child) => {
     child.props = mergeDeep(child.props, parent.props)
-  })
+  }, false)
 }
 
 export default fillDown

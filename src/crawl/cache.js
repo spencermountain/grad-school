@@ -7,23 +7,21 @@ const cacheDown = root => {
       parent._cache.parents = parent._cache.parents || []
       child._cache.parents = parent._cache.parents.concat([parent.id])
     }
-  })
+  }, false)
 }
 
 // count parents
 const cacheUp = root => {
   const nodes = byDepth(root)
+  const byId = new Map()
   nodes.forEach(node => {
     node._cache.parents = []
     node._cache.children = []
-  })
-  cacheDown(root)
-  const byId = new Map()
-  nodes.forEach(node => {
     if (node.id) {
       byId.set(node.id, node)
     }
   })
+  cacheDown(root)
   nodes.forEach(node => {
     node._cache.parents.forEach(id => {
       if (byId.has(id)) {
