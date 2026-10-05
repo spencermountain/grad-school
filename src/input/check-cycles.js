@@ -2,7 +2,7 @@
 const checkCycles = roots => {
   const states = new Map()
   const stack = roots.map(node => [node, false])
-  while (stack.length) {
+  while (stack.length > 0) {
     const [node, done] = stack.pop()
     if (done) {
       states.set(node, 2)

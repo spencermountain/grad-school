@@ -1,3 +1,6 @@
+### 0.0.9 - [Sep 2026]
+- **[change]** - fix v8 slowdown with inlined export
+
 ### 0.0.8 - [Sep 2026]
 - **[change]** - support import {} from 'grad-school/core'
 
